@@ -47,7 +47,7 @@ import javax.xml.bind.JAXBException;
 
 import org.json.JSONException;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 import eurecom.common.util.ReadFile;
 import eurecom.common.util.Var;

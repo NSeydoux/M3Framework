@@ -37,7 +37,6 @@ import java.util.Set;
 
 import eurecom.common.util.ReadFile;
 import eurecom.common.util.Var;
-import eurecom.common.util.WSUtils;
 import eurecom.sparql.result.ExecuteSparql;
 import eurecom.sparql.result.ExecuteSparqlRecipe;
 import eurecom.sparql.result.ExecuteSparqlRecipeNaturopathy;

@@ -36,12 +36,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
+import org.glassfish.jersey.client.ClientConfig;
+
+
 //import sun.misc.IOUtils;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
 
 /**
  * Funtions to read file from a path and enrich the jena model or get the content of the file in a string
@@ -97,18 +102,21 @@ public class ReadFile {
 	 * @return String the result return by the web service
 	 */
 	public static String queryWebServiceXML(String urlWebService){
-		Client client = Client.create();
-		client.setConnectTimeout(120000);  //120 Seconds
-		client.setReadTimeout(120000);  //120 Seconds
-		WebResource webResource = client.resource(urlWebService);
-		WebResource.Builder builder = webResource.accept(MediaType.APPLICATION_XML_TYPE);
-		String result = builder.get(String.class);	//
-
+		
+		ClientConfig clientConfig = new ClientConfig();
+		Client client = ClientBuilder.newClient(clientConfig);
+		// FIXME : Set connetion and read timeout
+//		client.setConnectTimeout(120000);  //120 Seconds
+//		client.setReadTimeout(120000);  //120 Seconds
+		WebTarget webTarget = client.target(urlWebService);
+		Invocation.Builder invocationBuilder = webTarget.request().accept(MediaType.APPLICATION_XML_TYPE);
+		String response = invocationBuilder.get(String.class);
+		// FIXME : Are these comments necessary ? otherwise, use WSUtils.queryWebServiceXML(String urlWebService); to replace this function
 		// delete database
 		// if com.sun.jersey.api.client.UniformInterfaceException: GET http://emulator-box-services.appspot.com/senml/zones/ahdzfmVtdWxhdG9yLWJveC1zZXJ2aWNlc3IWCxIJWm9uZUFkbWluIgdraXRjaGVuDA returned a response status of 500 Internal Server Error
 		//at com.sun.jersey.api.client.WebResource.handle
 		//System.out.println("result senml api:" + result);
-		return result;
+		return response;
 	}
 
 }

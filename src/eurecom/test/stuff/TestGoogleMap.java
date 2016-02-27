@@ -38,6 +38,7 @@ import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.LatLng;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,13 @@ public class TestGoogleMap {
         
         Geocoder geocoder = new Geocoder();
         GeocoderRequest request = new GeocoderRequestBuilder().setAddress(address).getGeocoderRequest();
-        GeocodeResponse response = geocoder.geocode(request);
+        GeocodeResponse response=null;
+		try {
+			response = geocoder.geocode(request);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         for(GeocoderResult r : response.getResults()) {
             r.getGeometry().getLocation();
@@ -76,7 +83,13 @@ public class TestGoogleMap {
         
         Geocoder geocoder = new Geocoder();
         GeocoderRequest request = new GeocoderRequestBuilder().setLocation(latlng).getGeocoderRequest();
-        GeocodeResponse response = geocoder.geocode(request);
+        GeocodeResponse response=null;
+		try {
+			response = geocoder.geocode(request);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         for(GeocoderResult r : response.getResults()) {
             List<GeocoderAddressComponent> listComp = r.getAddressComponents();

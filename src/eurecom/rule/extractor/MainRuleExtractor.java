@@ -30,11 +30,11 @@ This work is supported by the Com4Innov platform of the Pole SCS and DataTweet (
  *******************************************************************************/
 package eurecom.rule.extractor;
 
-import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.Restriction;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.Restriction;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.util.iterator.ExtendedIterator;
 
 import eurecom.common.util.ReadFile;
 

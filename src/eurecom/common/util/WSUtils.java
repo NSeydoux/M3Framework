@@ -33,21 +33,34 @@ package eurecom.common.util;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.glassfish.jersey.client.ClientConfig;
+
 import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
 import net.sf.json.xml.XMLSerializer;
+
+
+
+
 
 //import sun.misc.IOUtils;
 import com.google.appengine.labs.repackaged.org.json.JSONException;
 import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.appengine.labs.repackaged.org.json.XML;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
+
+
+
+
+
 
 import eurecom.data.converter.Measurements;
 
@@ -81,22 +94,33 @@ public class WSUtils {
          return xml;
 	}
 
+	/**
+	 * 
+	 * @param urlWebService
+	 * @param type
+	 * @return Returns the result returned by the webservice as the provided type
+	 */
+	private static String queryWebServiceGeneric(String urlWebService, MediaType type)
+	{
+		ClientConfig clientConfig = new ClientConfig();
+		Client client = ClientBuilder.newClient(clientConfig);
+		// FIXME : Set connection and read timeout
+//		client.setConnectTimeout(120000);  //120 Seconds
+//		client.setReadTimeout(120000);  //120 Seconds
+		WebTarget webTarget = client.target(urlWebService);
+		Invocation.Builder invocationBuilder = webTarget.request().accept(type);
+		String response = invocationBuilder.get(String.class);
+		return response;
+	}
 	
 	/**
 	 * 
 	 * @param urlWebService
 	 * @return String the result returned by the web service as JSON
 	 */
-	public static String queryWebServiceJSON(String urlWebService){
-		Client client = Client.create();
-		client.setConnectTimeout(120000);  //120 Seconds
-		client.setReadTimeout(120000);  //120 Seconds
-		WebResource webResource = client.resource(urlWebService);
-		WebResource.Builder builder = webResource.accept(MediaType.APPLICATION_JSON_TYPE);
-		String result = builder.get(String.class);	//
-
-		//System.out.println("result senml api:" + result);
-		return result;
+	public static String queryWebServiceJSON(String urlWebService)
+	{
+		return WSUtils.queryWebServiceGeneric(urlWebService, MediaType.APPLICATION_JSON_TYPE);
 	}
 	
 	/**
@@ -104,16 +128,9 @@ public class WSUtils {
 	 * @param urlWebService
 	 * @return String the result returned by the web service
 	 */
-	public static String queryWebService(String urlWebService){
-		Client client = Client.create();
-		client.setConnectTimeout(120000);  //120 Seconds
-		client.setReadTimeout(120000);  //120 Seconds
-		WebResource webResource = client.resource(urlWebService);
-		WebResource.Builder builder = webResource.accept(MediaType.TEXT_PLAIN);
-		String result = builder.get(String.class);	//
-
-		//System.out.println("result senml api:" + result);
-		return result;
+	public static String queryWebService(String urlWebService)
+	{
+		return WSUtils.queryWebServiceGeneric(urlWebService, MediaType.TEXT_PLAIN_TYPE);
 	}
 	
 	/**
@@ -121,20 +138,10 @@ public class WSUtils {
 	 * @param urlWebService
 	 * @return String the result returned by the web service
 	 */
-	public static String queryWebServiceXML(String urlWebService){
-		Client client = Client.create();
-		client.setConnectTimeout(120000);  //120 Seconds
-		client.setReadTimeout(120000);  //120 Seconds
-		WebResource webResource = client.resource(urlWebService);
-		WebResource.Builder builder = webResource.accept(MediaType.APPLICATION_XML_TYPE);
-		String result = builder.get(String.class);	//
-
-		//System.out.println("result senml api:" + result);
-		return result;
+	public static String queryWebServiceXML(String urlWebService)
+	{
+		return WSUtils.queryWebServiceGeneric(urlWebService, MediaType.APPLICATION_XML_TYPE);
 	}
-	
-	
-	
 
 	/**
 	 * Read an XML file and transforms XML data into RDF data

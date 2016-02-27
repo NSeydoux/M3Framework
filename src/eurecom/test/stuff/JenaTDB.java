@@ -30,9 +30,9 @@ This work is supported by the Com4Innov platform of the Pole SCS and DataTweet (
  *******************************************************************************/
 package eurecom.test.stuff;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.tdb.TDBFactory;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.tdb.TDBFactory;
 
 public class JenaTDB {
 
@@ -42,8 +42,10 @@ public class JenaTDB {
 	public static void main(String[] args) {
 		 // Direct way: Make a TDB-backed Jena model in the named directory.
 		  String directory = "MyDatabases/DB1" ;
-		  Model model = TDBFactory.createModel(directory) ;
-
+		  // FIXME : check if nothing is broken
+		  //Model model = TDBFactory.createModel(directory) ;
+		  Dataset ds = TDBFactory.createDataset(directory);
+		  Model model = ds.getDefaultModel();
 		  model.close() ;
 
 		  // Direct way: Make a TDB-backed dataset

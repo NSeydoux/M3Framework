@@ -40,7 +40,7 @@ import java.util.zip.ZipFile;
 
 import org.json.JSONException;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 import eurecom.common.util.ReadFile;
 import eurecom.generic.m2mapplication.M2MAppGeneric;

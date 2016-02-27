@@ -32,18 +32,17 @@ package eurecom.constrained.devices;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
-import com.hp.hpl.jena.rdf.model.InfModel;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.reasoner.Reasoner;
-import com.hp.hpl.jena.reasoner.rulesys.GenericRuleReasoner;
-import com.hp.hpl.jena.reasoner.rulesys.Rule;
-import com.hp.hpl.jena.vocabulary.RDF;
+import org.apache.jena.datatypes.xsd.XSDDatatype;
+import org.apache.jena.rdf.model.InfModel;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.reasoner.Reasoner;
+import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
+import org.apache.jena.reasoner.rulesys.Rule;
+import org.apache.jena.vocabulary.RDF;
 
 import eurecom.common.util.Var;
 import eurecom.data.converter.ConvertSensorDataToM3;
@@ -70,7 +69,7 @@ public class ConvertRaspberrySensorData {
 			JSONArray raw_data = jo_senml.getJSONArray("e");
 
 			String measurementURI = converter.createUriUnique();
-			Property hasName = ResourceFactory.createProperty(Var.NS_M3, "hasName"); 
+			Property hasName = ResourceFactory.createProperty(Var.NS_M3, "hasName");
 			Resource resourceMeasurement = converter.model.createResource(measurementURI);
 			resourceMeasurement.addProperty(RDF.type, converter.model.getResource(Var.NS_M3 + "Measurement"));
 
